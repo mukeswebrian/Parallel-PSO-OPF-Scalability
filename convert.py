@@ -11,7 +11,7 @@ pp.runpp(net)
 pc.to_mpc(net, "case14.mat")
 '''
 
-# load network
-net = pc.from_mpc('case30.mat', casename_mpc_file='ans')
-pp.runpp(net)
+# load MATPOWER network and calculate opf
+net = pc.from_mpc('case_files\pglib_opf_case14_ieee.mat', casename_mpc_file='ans')
+pp.runopp(net)
 print(net)
