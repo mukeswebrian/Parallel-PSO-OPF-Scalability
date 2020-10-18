@@ -3,5 +3,4 @@ name:
 dependencies:
   - python=3.8.3
   - pandas=1.0.5
-  - pandapower
   - progress=1.5
