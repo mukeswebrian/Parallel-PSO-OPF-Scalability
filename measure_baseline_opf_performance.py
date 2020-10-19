@@ -5,8 +5,8 @@ import pandas as pd
 import time
 from progress.bar import Bar
 
-cases = [f for f in os.listdir('case_files')]
-#cases = [c.strip() for c in open('reduced_case_list.txt','r').readlines()]
+#cases = [f for f in os.listdir('case_files')]
+cases = [c.strip() for c in open('reduced_case_list.txt','r').readlines()]
 results = []
 bar = Bar('Solving cases', max=len(cases))
 
