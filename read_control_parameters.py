@@ -1,32 +1,16 @@
 import pandas as pd
 
-#TBD - To delete
-def addParamTypeCol(param_data, param_type):
-    paramType = pd.Series([param_type for i in param_data.index],
-                          index=param_data.index,
-                          name='paramType')
-
-    return param_data.join(paramType)
-
-# TBD - To delete
-def addParamNumTypeCol(param_data, num_type):
-    numType = pd.Series([num_type for i in param_data.index],
-                          index=param_data.index,
-                          name='numType')
-
-    return param_data.join(numType)
-
 def appendColumn(df, name, value):
     # append a constant value column to a dataframe
     newCol = pd.Series([value for i in df.index],
                        index=df.index,
                        name=name)
 
-    return df.join(newCol)
+    return pd.DataFrame(df).join(newCol)
 
 def getGenRealPower(net):
     # read generation data from network
-    param_data = net.res_gen[['p_mw', 'min_p_mw', 'max_p_mw']]
+    param_data = net.gen[['p_mw', 'min_p_mw', 'max_p_mw']]
 
     # change names to match other parameters
     param_data = param_data.rename(columns={
@@ -46,31 +30,82 @@ def getGenRealPower(net):
     return param_data
 
 def getGenVsched(net):
-    param_data=net.res_gen.vm_pu
+    param_data = net.gen.vm_pu
+    param_data.name = 'params'
 
     param_data = appendColumn(df=param_data,
                               value='vSched',
                               name='paramType')
 
     param_data = appendColumn(df=param_data,
+                              value=0.95,
+                              name='minVal')
+    param_data = appendColumn(df=param_data,
+                              value=1.05,
+                              name='maxVal')
+
+    param_data = appendColumn(df=param_data,
                               value='continuous',
                               name='numType')
-    return data
+    return param_data
 
 def getTrafoTapPosition(net):
-    data = addParamTypeCol(param_data=net.trafo.tap_pos,
-                           param_type='tx2winding')
-    return data
+    param_data = net.trafo.tap_pos
+    param_data.name = 'params'
+    param_data = appendColumn(df=param_data,
+                              value='tx2winding',
+                              name='paramType')
+
+    param_data = appendColumn(df=param_data,
+                              value=-3,
+                              name='minVal')
+    param_data = appendColumn(df=param_data,
+                              value=3,
+                              name='maxVal')
+
+    param_data = appendColumn(df=param_data,
+                              value='discrete',
+                              name='numType')
+    return param_data
 
 def get3WTrafoTapPosition(net):
-    data = addParamTypeCol(param_data=net.trafo3w.tap_pos,
-                           param_type='tx3winding')
-    return data
+    param_data=net.trafo3w.tap_pos
+    param_data.name = 'params'
+    param_data = appendColumn(df=param_data,
+                              value='tx3winding',
+                              name='paramType')
+
+    param_data = appendColumn(df=param_data,
+                              value=-3,
+                              name='minVal')
+    param_data = appendColumn(df=param_data,
+                              value=3,
+                              name='maxVal')
+
+    param_data = appendColumn(df=param_data,
+                              value='discrete',
+                              name='numType')
+    return param_data
 
 def getshunt(net):
-    data = addParamTypeCol(param_data=net.shunt.step,
-                           param_type='shunt')
-    return data
+
+    param_data = param_data=net.shunt.step
+    param_data.name = 'params'
+    param_data = appendColumn(df=param_data,
+                              value='shunt',
+                              name='paramType')
+
+    param_data = appendColumn(df=param_data,
+                              value=1,
+                              name='minVal')
+    param_data = appendColumn(df=param_data,
+                              value=3,
+                              name='maxVal')
+
+    param_data = appendColumn(df=param_data,
+                              value='discrete',
+                              name='numType')
+    return param_data
 
 def get1DparameterArray(net):
 
@@ -87,4 +122,6 @@ def get1DparameterArray(net):
     for parameter in params:
         paramArray = pd.concat([paramArray, params[parameter]])
 
-    return paramArray.reset_index()[['index','paramType','params']]
+    cols = ['index','paramType','numType','params','maxVal','minVal']
+
+    return paramArray.reset_index()[cols]
