@@ -120,9 +120,3 @@ def updateControlParams(net, param_data):
 
 # Setting & Enforcing voltage constraints - use cost function
 # Setting & Enforcing Thermal constraints - use cost function
-
-# Fitness Evaluation (Loss and cost calculation)
-'''
-
-(A * line loss + B * thermal violation + C * voltage violation)
-'''

@@ -22,4 +22,3 @@ pglib_opf_case2869_pegase.mat
 pglib_opf_case3012wp_k.mat
 pglib_opf_case3120sp_k.mat
 pglib_opf_case3375wp_k.mat
-pglib_opf_case9241_pegase.mat

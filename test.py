@@ -11,11 +11,16 @@ case = 'pglib_opf_case57_ieee.mat'
 net = pc.from_mpc(os.path.join(os.getcwd(), 'case_files', case),
                   casename_mpc_file='ans')
 
-#pp.runpp(net)
+pp.runpp(net)
 
-paramTypes = rd.get1DparameterArray(net)
+print(net.res_trafo)
+print(net.res_line)
+print(net.res_trafo3w)
 
-positions = util.initPositions(paramTypes, n=10)
 
-print(paramTypes)
-print(positions)
+'''
+print('base case mw:', paramTypes.groupby('paramType').params.sum()['realPower'])
+
+for pos in positions.columns:
+    print('case', pos,':', sum(positions[pos][:6]))
+'''

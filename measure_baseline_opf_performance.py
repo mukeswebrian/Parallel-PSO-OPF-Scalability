@@ -30,7 +30,8 @@ for case in cases:
         'case': case,
         'bus_count': len(net['bus']),
         'runtime_seconds': stop-start,
-        'converged': converged
+        'converged': converged,
+        'losses_mw': net.res_line.pl_mw.sum() + net.res_trafo.pl_mw.sum() + net.res_trafo3w.pl_mw.sum()
     })
 
     # update progress Bar
@@ -38,4 +39,4 @@ for case in cases:
 bar.finish()
 
 results = pd.DataFrame(results)
-results.to_excel('opf_runtimes_all.xlsx')
+results.to_excel('opf_runtimes.csv')
