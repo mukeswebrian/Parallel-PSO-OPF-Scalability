@@ -39,4 +39,4 @@ for case in cases:
 bar.finish()
 
 results = pd.DataFrame(results)
-results.to_excel('opf_runtimes.csv')
+results.to_csv('opf_runtimes.csv')

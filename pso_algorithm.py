@@ -1,3 +1,7 @@
+'''
+Author: Brian Mukeswe
+
+'''
 import pso_util as util
 import read_control_parameters as rd
 import copy
@@ -5,12 +9,15 @@ import pandas as pd
 import sys
 import os
 from progress.bar import Bar
+import log_util
+import time
+from pandapower import networks
 
-def runPSO(n=10, alpha1=0.2, alpha2=0.2, omega=0.5, iterations=100, case='pglib_opf_case57_ieee.mat', log='example.log'):
+def runPSO(case='pglib_opf_case57_ieee.mat', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, run_name='example'):
     '''
     parameter default values
 
-    n = 10 # number of particles
+    n = 100 # number of particles
     alpha1 = 0.2 # attraction to personal best
     alpha2 = 0.2 # attraction to globa; best
     omega = 0.5 # intertia
@@ -18,12 +25,17 @@ def runPSO(n=10, alpha1=0.2, alpha2=0.2, omega=0.5, iterations=100, case='pglib_
     case = 'pglib_opf_case57_ieee.mat' # specify the power system to use
     '''
 
-    # open log file - overites file if it exists
-    logFile = open(os.path.join(os.getcwd(), 'run_logs', log), 'w')
-    logFile.write('case: {}, iter: {}, n: {}, a1,a2: {},{} omega: {}\n'.format(case, iterations, n, alpha1, alpha2, omega))
-    logFile.write('\niter, bestFitness\n')
+    # log inputs
+    inputs = [case, iterations, n, alpha1, alpha2, omega]
+    names = ['case', 'iterations', 'nParticles', 'alpha1', 'alpha2', 'omega']
+    log_util.logInputs(inputs, names, run_name)
+
+    # initalize data logger
+    log = log_util.createIterLog(run_name)
+
     # read problem parameters
-    net = util.loadPowerSys(case)
+    # net = util.loadPowerSys(case)
+    net = networks.case14()
     paramTypes = rd.get1DparameterArray(net)
 
     # initialize particles
@@ -43,6 +55,9 @@ def runPSO(n=10, alpha1=0.2, alpha2=0.2, omega=0.5, iterations=100, case='pglib_
 
     # show progress bar
     bar = Bar('Running iterations:', max=iterations)
+
+    # start timer
+    tStart = time.perf_counter()
 
     while i<iterations:
 
@@ -64,9 +79,6 @@ def runPSO(n=10, alpha1=0.2, alpha2=0.2, omega=0.5, iterations=100, case='pglib_
                 gBestFitness = fitness.loc[particle]
                 gBestPos = copy.deepcopy(positions[particle])
 
-        logFile.write('{}, {}\n'.format(i, gBestFitness))
-
-
         # update velocities
         velocities = util.updateVelocities(velocities, positions, pBestPos, gBestPos, omega, alpha1, alpha2)
 
@@ -75,12 +87,16 @@ def runPSO(n=10, alpha1=0.2, alpha2=0.2, omega=0.5, iterations=100, case='pglib_
 
         i += 1
         bar.next()
+        tIter = time.perf_counter()
+        log_util.logIter(log, i, gBestFitness, tIter-tStart)
+
     bar.finish()
+    del(log)
 
-    logFile.write('\n\n Best Position \n')
-    logFile.write(str(gBestPos))
+    # save network file with best solution
+    util.saveBestCase(net, gBestPos, paramTypes, run_name)
 
-    return {'gBestPos':gBestPos, 'gBestFitness':gBestFitness}
+    print('\ndone!')
 
 
 if __name__ == '__main__':
@@ -88,8 +104,16 @@ if __name__ == '__main__':
     print('Initializing case ...')
     case = sys.argv[1]
     iterations = int(sys.argv[2])
-    run_name = sys.argv[3]
+    nParticles = int(sys.argv[3])
+    alpha1 = float(sys.argv[4])
+    alpha2 = float(sys.argv[5])
+    omega = float(sys.argv[6])
+    run_name = sys.argv[7]
 
-    best = runPSO(case=case, iterations=iterations, log=run_name+'.log')
-    #print(best['gBestFitness'])
-    #print(best['gBestPos'])
+    runPSO(case=case,
+           iterations=iterations,
+           n=nParticles,
+           alpha1=alpha1,
+           alpha2=alpha2,
+           omega=omega,
+           run_name=run_name)

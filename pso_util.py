@@ -1,14 +1,21 @@
 import random
 import pandas as pd
 import pandapower as pp
+from pandapower import networks
 import pandapower.converter as pc
+from pandapower.plotting import to_html
 import network_component_updates as up
 import os
 import random as rd
 
 def loadPowerSys(case):
-    net = pc.from_mpc(os.path.join(os.getcwd(), 'case_files', case),
+    # if case is not in case list, use built in case
+    if case in os.listdir(os.path.join(os.getcwd(), 'case_files')):
+        net = pc.from_mpc(os.path.join(os.getcwd(), 'case_files', case),
                       casename_mpc_file='ans')
+    else:
+        net = networks.case14()
+
     return net
 
 
@@ -65,6 +72,17 @@ def calcFitness(net, param_data):
     loss = net.res_line.pl_mw.sum() + net.res_trafo.pl_mw.sum() + net.res_trafo3w.pl_mw.sum()
 
     return loss
+
+def saveBestCase(net, gBestPos, paramTypes, run_name):
+    gBestPos.name = 'params'
+    param_data = pd.concat([gBestPos, paramTypes.paramType, paramTypes['index']], axis=1)
+
+    # write particle data to network and solve case
+    up.updateControlParams(net, param_data)
+    pp.runpp(net)
+
+    to_html(net, os.path.join(os.getcwd(), 'run_results',run_name+'.html')) # save solved case
+
 
 def updateVelocities(velocities, positions, pBestPos, gBestPos, omega, alpha1, alpha2):
     term1 = (omega * velocities)
