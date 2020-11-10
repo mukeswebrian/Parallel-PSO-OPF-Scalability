@@ -1,6 +1,11 @@
 '''
 Author: Brian Mukeswe
+Date: Novemebr 9, 2020
+Email: b.mukeswe@sms.ed.ac.uk
 
+
+Purpose: This is a Python based implemetnation of the canonical
+         particle swarm optimization algorithm for optimal power flow.
 '''
 import pso_util as util
 import read_control_parameters as rd
@@ -13,7 +18,7 @@ import log_util
 import time
 from pandapower import networks
 
-def runPSO(case='pglib_opf_case57_ieee.mat', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, run_name='example'):
+def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, run_name='example'):
     '''
     parameter default values
 
@@ -22,20 +27,24 @@ def runPSO(case='pglib_opf_case57_ieee.mat', iterations=100, n=100, alpha1=0.25,
     alpha2 = 0.2 # attraction to globa; best
     omega = 0.5 # intertia
     iterations = 100 # maximum number of iterations
-    case = 'pglib_opf_case57_ieee.mat' # specify the power system to use
+    case =  None # path to the MATPOWER power system to use (.mat file)
     '''
 
     # log inputs
+    log_destination = 'file' # either "file" or "database"
     inputs = [case, iterations, n, alpha1, alpha2, omega]
     names = ['case', 'iterations', 'nParticles', 'alpha1', 'alpha2', 'omega']
-    log_util.logInputs(inputs, names, run_name)
+    log_util.logInputs(inputs, names, run_name, log_destination)
 
     # initalize data logger
-    log = log_util.createIterLog(run_name)
+    log = log_util.createIterLog(run_name, log_destination)
 
-    # read problem parameters
-    # net = util.loadPowerSys(case)
-    net = networks.case14()
+    # load case data
+    if case == '':
+        net = networks.case14() # use built in IEEE 14 bus case by default
+    else:
+        net = util.loadPowerSys(case)
+
     paramTypes = rd.get1DparameterArray(net)
 
     # initialize particles
@@ -45,7 +54,7 @@ def runPSO(case='pglib_opf_case57_ieee.mat', iterations=100, n=100, alpha1=0.25,
     velocities = util.initVelocities(paramTypes, n)
 
 
-    # start iteration loop
+    # intialize iteration variables
     i = 0
     fitness = pd.Series([-1 for pos in positions.columns], index=positions.columns)
     pBestFitness = copy.deepcopy(fitness)
@@ -59,6 +68,7 @@ def runPSO(case='pglib_opf_case57_ieee.mat', iterations=100, n=100, alpha1=0.25,
     # start timer
     tStart = time.perf_counter()
 
+    # start iteration loop
     while i<iterations:
 
         # calculate fitness of each particle
@@ -74,7 +84,7 @@ def runPSO(case='pglib_opf_case57_ieee.mat', iterations=100, n=100, alpha1=0.25,
                 pBestFitness.update(pd.Series([fitnessVal], index=[particle]))
                 pBestPos.update(copy.deepcopy(positions[particle]))
 
-            # update global best (to use best ever)
+            # update global best (use best ever)
             if fitness.loc[particle] < gBestFitness or gBestFitness==-1:
                 gBestFitness = fitness.loc[particle]
                 gBestPos = copy.deepcopy(positions[particle])
@@ -88,10 +98,10 @@ def runPSO(case='pglib_opf_case57_ieee.mat', iterations=100, n=100, alpha1=0.25,
         i += 1
         bar.next()
         tIter = time.perf_counter()
-        log_util.logIter(log, i, gBestFitness, tIter-tStart)
+        log_util.logIter(log, i, gBestFitness, tIter-tStart, log_destination)
 
-    bar.finish()
-    del(log)
+    bar.finish() # terminate progress bar
+    log_util.endLog(log, run_name, log_destination) # terminate data logger
 
     # save network file with best solution
     util.saveBestCase(net, gBestPos, paramTypes, run_name)

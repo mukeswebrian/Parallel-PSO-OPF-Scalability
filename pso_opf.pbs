@@ -1,0 +1,20 @@
+#!/bin/bash --login
+
+# This is a PBS script for the Tier2 system Cirrus
+
+# PBS job options (name, compute nodes, job time)
+#PBS -N pso_opf
+#PBS -l walltime=00:05:00
+#PBS -A dc116
+#PBS -l select=1:ncpus=36
+
+# configure environment
+eval "$(/lustre/home/dc116/s1895870/miniconda3/bin/conda shell.bash hook)"
+conda activate dissertation
+
+# Change to the directory that the job was submitted from
+cd $PBS_O_WORKDIR
+
+# execute pso opf code
+python parallel_pso_algorithm.py "" 50 140 0.25 0.2 0.7 parallel140run1_10p 10
+python parallel_pso_algorithm.py "" 50 140 0.25 0.2 0.7 parallel140run1_5p 5

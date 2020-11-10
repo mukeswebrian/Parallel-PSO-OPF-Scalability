@@ -1,46 +1,90 @@
 from pymongo import MongoClient
 import pandas as pd
+import json
+import os
 
 server = {"host" : "localhost",
           "port" : 27017,
           "database" : "",
           "collection" : ""}
 
+logData = {
+    "run_name": "",
+    "inputs":{},
+    "iter_data":[]
+    }
 
-def logInputs(inputs, names, run_name):
+def logInputs(inputs, names, run_name, log_destination):
 
-    # specify host db details as necessary
-    server["database"] = "pso_opf_inputs"
-    server["collection"] = run_name
+    if log_destination == 'database':
+        # specify host db details as necessary
+        server["database"] = "pso_opf_inputs"
+        server["collection"] = run_name
 
-    client = MongoClient(host=server["host"], port=server["port"])
-    log = client[server["database"]][server["collection"]]
+        client = MongoClient(host=server["host"], port=server["port"])
+        log = client[server["database"]][server["collection"]]
 
-    obj = {name:val for name,val in zip(names,inputs)}
-    log.insert_one(obj)
-    del(log)
+        obj = {name:val for name,val in zip(names,inputs)}
+        log.insert_one(obj)
+        del(log)
 
+    elif log_destination == 'file':
+        logData['run_name'] = run_name
+        logData['inputs'] = {name:val for name,val in zip(names,inputs)}
+        target = os.path.join(os.getcwd(), 'run_data', run_name+'.json')
+        logFile = open(target, 'w')
+        json.dump(logData, logFile)
 
-def createIterLog(run_name):
-
-    # specify host db details as necessary
-    server["database"] = "pso_opf_runs"
-    server["collection"] = run_name
-
-    client = MongoClient(host=server["host"], port=server["port"])
-    log = client[server["database"]][server["collection"]]
-
-    return log
+    else:
+        print('Log error: log_destination must be either "file" or "database"')
 
 
-def logIter(log, iter, bestFitness, timeElapsed):
+def createIterLog(run_name, log_destination):
+
+    if log_destination == 'database':
+        # specify host db details as necessary
+        server["database"] = "pso_opf_runs"
+        server["collection"] = run_name
+
+        client = MongoClient(host=server["host"], port=server["port"])
+        log = client[server["database"]][server["collection"]]
+        return log
+
+    elif log_destination == 'file':
+        target = os.path.join(os.getcwd(), 'run_data', run_name+'.json')
+        log = json.load(open(target, 'r'))
+        return log
+
+    else:
+        print('Log error: log_destination must be either "file" or "database"')
+
+def logIter(log, iter, bestFitness, timeElapsed, log_destination):
     obj = {
         'iteration':iter,
         'bestFitness':bestFitness,
         'timeElapsed':timeElapsed
     }
 
-    log.insert_one(obj)
+    if log_destination == 'database':
+        log.insert_one(obj)
+
+    elif log_destination == 'file':
+        log['iter_data'].append(obj)
+
+    else:
+        print('Log error: log_destination must be either "file" or "database"')
+
+def endLog(log, run_name, log_destination):
+    if log_destination == 'database':
+        del(log)
+    elif log_destination == 'file':
+        target = os.path.join(os.getcwd(), 'run_data', run_name+'.json')
+        logFile = open(target, 'w')
+        json.dump(log, logFile)
+        logFile.close()
+    else:
+        print('Log error: log_destination must be either "file" or "database"')
+
 
 def getAvailableRuns():
     # itdentify database
