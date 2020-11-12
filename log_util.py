@@ -40,6 +40,9 @@ def logInputs(inputs, names, run_name, log_destination):
 
 
 def createIterLog(run_name, log_destination):
+    '''
+    obtain a pointer to the log for storing fitness and time data at each iteration
+    '''
 
     if log_destination == 'database':
         # specify host db details as necessary
@@ -58,6 +61,27 @@ def createIterLog(run_name, log_destination):
     else:
         print('Log error: log_destination must be either "file" or "database"')
 
+def createProfileLog(run_name, log_destination):
+    '''
+    obtain a pointer to the log for storing run profile data
+    '''
+
+    if log_destination == 'database':
+        server["database"] = "pso_opf_run_profiles"
+        server["collection"] = run_name
+
+        client = MongoClient(host=server["host"], port=server["port"])
+        ProfileLog = client[server["database"]][server["collection"]]
+        return ProfileLog
+
+    elif log_destination == 'file':
+        target = os.path.join(os.getcwd(), 'run_profiles', run_name+'.json')
+        ProfileLog = open(target, 'w')
+        return ProfileLog
+    else:
+        print('Log error: log_destination must be either "file" or "database"')
+
+
 def logIter(log, iter, bestFitness, timeElapsed, log_destination):
     obj = {
         'iteration':iter,
@@ -70,6 +94,17 @@ def logIter(log, iter, bestFitness, timeElapsed, log_destination):
 
     elif log_destination == 'file':
         log['iter_data'].append(obj)
+
+    else:
+        print('Log error: log_destination must be either "file" or "database"')
+
+def logProfile(profileLog, profileData, log_destination):
+    if log_destination == 'database':
+        log.insert_one(profileData)
+
+    elif log_destination == 'file':
+        json.dump(profileData, profileLog)
+        profileLog.close()
 
     else:
         print('Log error: log_destination must be either "file" or "database"')
