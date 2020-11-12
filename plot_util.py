@@ -1,5 +1,8 @@
 import log_util
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+
+
 
 plot_fmt = {
     'marker':'.',
@@ -21,9 +24,9 @@ title_fmt = {
     'size':16
 }
 
-def plotRunQuantities(run, x_dim, x_label, y_dim, y_label, title, ax):
+def plotRunQuantities(run, x_dim, x_label, y_dim, y_label, title, ax, source):
 
-    data = log_util.getRunData(run)
+    data = log_util.getRunData(run, source)
     label = run
     data.rename(columns={y_dim: label}, inplace=True)
     data.plot(kind='line', x=x_dim, y=label, ax=ax, figsize=(10,8), **plot_fmt)
@@ -38,9 +41,9 @@ def plotRunQuantities(run, x_dim, x_label, y_dim, y_label, title, ax):
 
     return ax
 
-def plotAverageData(nParticles, runType, x_dim, x_label, y_dim, y_label, title, ax):
+def plotAverageData(nParticles, runType, x_dim, x_label, y_dim, y_label, title, ax, source):
 
-    data = log_util.getAverageData(nParticles, runType)
+    data = log_util.getAverageData(nParticles, source, runType)
     label = '{} particles - {}'.format(nParticles, runType)
     data.rename(columns={y_dim: label}, inplace=True)
     data.plot(kind='line', x=x_dim, y=label, ax=ax, figsize=(10,8), **plot_fmt)
@@ -54,3 +57,18 @@ def plotAverageData(nParticles, runType, x_dim, x_label, y_dim, y_label, title, 
     plt.grid()
 
     return ax
+
+def plotProfile(data, title):
+    fig = go.Figure(data=[go.Pie(
+            labels=list(data.keys()),#[i for i in data.index],
+            values=list(data.values()),#[data.loc[i] for i in data.index],
+            hole = .4,
+          )])
+    fig.update_layout(title_text=title)
+
+    return fig
+
+def plotLine(x, y, name, fig):
+    fig.add_trace(go.Scatter(x=x, y=y, mode='lines+markers', name=name))
+
+    return fig

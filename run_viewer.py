@@ -20,6 +20,7 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 st.title('Power Loss Minimization with PSO')
 st.header('Run Viewer')
 
+source = st.sidebar.selectbox("Select data source", ['database', 'file'], 1)
 consolidate = st.sidebar.radio("Select one",
                         ['plot average data','plot individual runs'])
 
@@ -34,16 +35,16 @@ fig, ax = plt.subplots(**{'facecolor': '#EDF1F9'})
 if consolidate=='plot individual runs':
 
     serial_runs = st.sidebar.multiselect('Select Serial Runs to be plotted',
-                                         sorted(log_util.getSerialRuns()))
+                                         sorted(log_util.getSerialRuns(source)))
     parallel_runs = st.sidebar.multiselect('Select Parallel Runs to be plotted',
-                                           sorted(log_util.getParallelRuns()))
+                                           sorted(log_util.getParallelRuns(source)))
 
     to_plot = serial_runs + parallel_runs
 
 
     if len(to_plot)>0:
         for run in to_plot:
-            ax = plot_util.plotRunQuantities(run, x_dim, x_label, y_dim, y_label, title, ax)
+            ax = plot_util.plotRunQuantities(run, x_dim, x_label, y_dim, y_label, title, ax, source)
 
         st.pyplot(fig)
 
@@ -51,15 +52,15 @@ if consolidate=='plot individual runs':
         st.markdown('Select some data to display here ...')
 
 elif consolidate == 'plot average data':
-    parallel_nParticles = st.sidebar.multiselect('select parallel plots to be included', log_util.getParallelGroups())
-    serial_nParticles = st.sidebar.multiselect('select serial plots to be included', log_util.getSerialGroups())
+    parallel_nParticles = st.sidebar.multiselect('select parallel plots to be included', log_util.getParallelGroups(source))
+    serial_nParticles = st.sidebar.multiselect('select serial plots to be included', log_util.getSerialGroups(source))
 
 
     for n in parallel_nParticles:
-        ax = plot_util.plotAverageData(n, 'parallel', x_dim, x_label, y_dim, y_label, title, ax)
+        ax = plot_util.plotAverageData(n, 'parallel', x_dim, x_label, y_dim, y_label, title, ax, source)
 
     for n in serial_nParticles:
-        ax = plot_util.plotAverageData(n, 'serial', x_dim, x_label, y_dim, y_label, title, ax)
+        ax = plot_util.plotAverageData(n, 'serial', x_dim, x_label, y_dim, y_label, title, ax, source)
 
     st.pyplot(fig)
 
