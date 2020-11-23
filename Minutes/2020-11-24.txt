@@ -1,0 +1,3 @@
+- Review code profiling results
+- Discuss theoretical framework
+- Discuss feasibility of run-plan using shared memeory approach

@@ -33,12 +33,12 @@ for profile in profiles:
 
 st.table(table.T)
 
-plot = st.sidebar.radio('Select one', ['pie', 'line'])
+plot = st.sidebar.radio('Select one', ['pie', 'line','bar'])
 
 if plot == 'pie':
     to_plot = st.sidebar.selectbox('Select profile to plo', profiles)
     plotData = {i:table[to_plot].loc[i] for i in table.index}
-    fig = plot_util.plotProfile(plotData, title='Proportional Breakdown: '+to_plot)
+    fig = plot_util.plotProfile(plotData, title='Runtime Breakdown: '+to_plot)
     st.plotly_chart(fig)
 
 elif plot =='line':
@@ -54,5 +54,13 @@ elif plot =='line':
 
     fig.update_layout(title='Duration vs Number of Particles',
                       xaxis_title='Number of Particles',
+                      yaxis_title='Duration (seconds)')
+    st.plotly_chart(fig)
+
+elif plot =='bar':
+    data = table.T.reset_index()
+    fig = plot_util.plotBar(data)
+    fig.update_layout(title='Runtime Breakdown',
+                      xaxis_title='Run',
                       yaxis_title='Duration (seconds)')
     st.plotly_chart(fig)
