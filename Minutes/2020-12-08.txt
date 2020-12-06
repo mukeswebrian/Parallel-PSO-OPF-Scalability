@@ -15,9 +15,5 @@ Agenda
 Discussion Notes
 
 
-- Next step: change number of threads while holding particles constant
-- lookup pyMPI
-- read about potential application of GPU
-
 Next meeting:
 
