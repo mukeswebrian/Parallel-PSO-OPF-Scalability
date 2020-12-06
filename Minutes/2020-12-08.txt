@@ -1,1 +1,23 @@
+Agenda
+- research threshold magnitudes in real life applications Independent System Operator(ISO) or Regional Transmission Operator(RTO)
+- consider impact of small perturbations to the solution: Security Constrained Economic dispatch(ED) or OPF
+  - Day ahead market - 24 hours
+  - Real time market - ~5 minutes
+  
+- Review scalability preliminary results
+  - Limited to one node
+  - Decided to focuus on MPI
+- Discuss possible approach for parallelization using MPI
+  - mpi4py: tested execution on Cirrus. 
+  - mpi4py has adequate documentation caompared to pyMPI
+- Strategy for choosing MPI topology
+
+Discussion Notes
+
+
+- Next step: change number of threads while holding particles constant
+- lookup pyMPI
+- read about potential application of GPU
+
+Next meeting:
 
