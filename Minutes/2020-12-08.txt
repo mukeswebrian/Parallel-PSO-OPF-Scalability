@@ -2,7 +2,8 @@ Agenda
 - research threshold magnitudes in real life applications Independent System Operator(ISO) or Regional Transmission Operator(RTO)
 - consider impact of small perturbations to the solution: Security Constrained Economic dispatch(ED) or OPF
   - Day ahead market - 24 hours
-  - Real time market - ~5 minutes
+  - Hour ahead market - 1 hour
+  - Real time dispatch - ~5 minutes
   
 - Review scalability preliminary results
   - Limited to one node
