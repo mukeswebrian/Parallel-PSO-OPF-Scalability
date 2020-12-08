@@ -1,6 +1,7 @@
 import log_util
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+import plotly.express as px
 
 
 
@@ -71,4 +72,10 @@ def plotProfile(data, title):
 def plotLine(x, y, name, fig):
     fig.add_trace(go.Scatter(x=x, y=y, mode='lines+markers', name=name))
 
+    return fig
+
+def plotBar(data):
+    to_plot = list(data.columns)
+    to_plot.remove('index')
+    fig = px.bar(data, x='index', y=to_plot)
     return fig

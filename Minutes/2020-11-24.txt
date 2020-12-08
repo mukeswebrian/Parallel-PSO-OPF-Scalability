@@ -1,0 +1,16 @@
+Agenda
+- Review code profiling results
+- Discuss theoretical framework
+- Discuss feasibility of run-plan using shared memory approach
+- Optimal job submission strategy
+
+Discussion Notes
+- consider impact of small perturbations to the solution.
+- research threshold magnitudes in real life applications 
+- Next step: change number of threads while holding particles constant
+- lookup pyMPI
+- read about potential application of GPU
+
+Next meeting:
+- Review scalability preliminary results
+- Discuss possible approach for parallelization using MPI 
