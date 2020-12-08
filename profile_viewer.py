@@ -36,7 +36,7 @@ st.table(table.T)
 plot = st.sidebar.radio('Select one', ['pie', 'line','bar'])
 
 if plot == 'pie':
-    to_plot = st.sidebar.selectbox('Select profile to plo', profiles)
+    to_plot = st.sidebar.selectbox('Select profile to plot', profiles)
     plotData = {i:table[to_plot].loc[i] for i in table.index}
     fig = plot_util.plotProfile(plotData, title='Runtime Breakdown: '+to_plot)
     st.plotly_chart(fig)
