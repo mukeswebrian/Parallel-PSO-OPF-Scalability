@@ -7,14 +7,20 @@ Agenda
   
 - Review scalability preliminary results
   - Limited to one node
-  - Decided to focuus on MPI
+  - Decided to focus on MPI
 - Discuss possible approach for parallelization using MPI
   - mpi4py: tested execution on Cirrus. 
   - mpi4py has adequate documentation caompared to pyMPI
 - Strategy for choosing MPI topology
 
 Discussion Notes
+- starting with a simpler topology e.g broadcast better than all sending to rank 0 and then rank 0 resending data
+- Test time all process to verify behaviour as expected
+- Think about the overall benefits of parallelization
+  - e.g to same thing faster, more in the same time, accommodate additional complexity etc
+  - Looking for either a pain to be solved, or opportunity to be gained
 
 
 Next meeting:
-
+- Tuesday 5th.
+-
