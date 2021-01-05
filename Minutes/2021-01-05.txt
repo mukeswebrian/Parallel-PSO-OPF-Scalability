@@ -1,0 +1,10 @@
+Agenda
+- Review and discuss inital MPI run results
+- Discuss strategies for reducing comminication overhead e.g reducing syncronization frequency
+
+Discussion
+-
+-
+
+Next meeting
+-
