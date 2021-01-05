@@ -4,9 +4,9 @@
 
 # Slurm job options (name, compute nodes, job time)
 #SBATCH --job-name=pso_opf
-#SBATCH --time=0:30:0
+#SBATCH --time=0:40:0
 #SBATCH --exclusive
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --tasks-per-node=36
 #SBATCH --cpus-per-task=1
 
@@ -29,8 +29,8 @@ export OMP_NUM_THREADS=1
 cd $SLURM_SUBMIT_DIR
 
 # execute parallel pso opf code
-srun python parallel_mpi_pso_algorithm.py "" 50 20 0.25 0.2 0.7 parallel20run1_4p 4
-srun python parallel_mpi_pso_algorithm.py "" 50 20 0.25 0.2 0.7 parallel20run1_8p 8
-srun python parallel_mpi_pso_algorithm.py "" 50 20 0.25 0.2 0.7 parallel20run1_12p 12
-srun python parallel_mpi_pso_algorithm.py "" 50 20 0.25 0.2 0.7 parallel20run1_16p 16
-srun python parallel_mpi_pso_algorithm.py "" 50 20 0.25 0.2 0.7 parallel20run1_20p 20
+srun python parallel_mpi_pso_algorithm.py "" 50 60 0.25 0.2 0.7 parallel_particles60_processes12_run1 12
+srun python parallel_mpi_pso_algorithm.py "" 50 60 0.25 0.2 0.7 parallel_particles60_processes24_run1 24
+srun python parallel_mpi_pso_algorithm.py "" 50 60 0.25 0.2 0.7 parallel_particles60_processes36_run1 36
+srun python parallel_mpi_pso_algorithm.py "" 50 60 0.25 0.2 0.7 parallel_particles60_processes48_run1 48
+srun python parallel_mpi_pso_algorithm.py "" 50 60 0.25 0.2 0.7 parallel_particles60_processes60_run1 60
