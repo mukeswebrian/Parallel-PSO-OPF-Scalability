@@ -1,0 +1,11 @@
+Agenda
+- Review current MPI implementation (broadcast and gather)
+- Discuss inital MPI run results
+- Discuss strategies for reducing comminication overhead e.g reducing syncronization frequency
+
+Discussion
+-
+-
+
+Next meeting
+-

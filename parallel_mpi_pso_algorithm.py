@@ -7,6 +7,7 @@ Email: b.mukeswe@sms.ed.ac.uk
 Purpose: This is a Python based implemetnation of the canonical
          particle swarm optimization algorithm for optimal power flow.
 '''
+from mpi4py import MPI
 import pso_util as util
 import read_control_parameters as rd
 import copy
@@ -17,6 +18,17 @@ from progress.bar import Bar
 import log_util
 import time
 from pandapower import networks
+
+'''
+MPI Notes:
+1. Only one of the processes will be used for data logging
+2. Processes will communicate their global bests every xx iterations
+'''
+# Initialize MPI variables
+comm = MPI.COMM_WORLD
+size = comm.Get_size()
+rank = comm.Get_rank()
+
 
 def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, run_name='example'):
     '''
@@ -30,14 +42,15 @@ def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, 
     case =  None # path to the MATPOWER power system to use (.mat file)
     '''
 
-    # log inputs
-    log_destination = 'file' # either "file" or "database"
-    inputs = [case, iterations, n, alpha1, alpha2, omega]
-    names = ['case', 'iterations', 'nParticles', 'alpha1', 'alpha2', 'omega']
-    log_util.logInputs(inputs, names, run_name, log_destination)
+    if rank == 0:
+        # log inputs
+        log_destination = 'file' # either "file" or "database"
+        inputs = [case, iterations, n, alpha1, alpha2, omega]
+        names = ['case', 'iterations', 'nParticles', 'alpha1', 'alpha2', 'omega']
 
-    # initalize data logger
-    log = log_util.createIterLog(run_name, log_destination)
+        log_util.logInputs(inputs, names, run_name, log_destination)
+        # initalize data logger
+        log = log_util.createIterLog(run_name, log_destination)
 
     # load case data
     if case == '':
@@ -62,11 +75,11 @@ def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, 
     gBestFitness = -1
     gBestPos = pd.Series(dtype=float)
 
-    # show progress bar
-    bar = Bar('Running iterations:', max=iterations)
-
-    # start timer
-    tStart = time.perf_counter()
+    if rank == 0: # process 0 initializes performance logging
+        # show progress bar
+        bar = Bar('Running iterations:', max=iterations)
+        # start timer
+        tStart = time.perf_counter()
 
     # start iteration loop
     while i<iterations:
@@ -96,22 +109,49 @@ def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, 
         positions = util.updatePositions(positions, velocities, paramTypes)
 
         i += 1
-        bar.next()
-        tIter = time.perf_counter()
-        log_util.logIter(log, i, gBestFitness, tIter-tStart, log_destination)
+        gBestFitness = comm.gather(gBestFitness, root=0)
+        gBestPos = comm.gather(gBestPos, root=0)
 
-    bar.finish() # terminate progress bar
-    log_util.endLog(log, run_name, log_destination) # terminate data logger
+        if rank == 0:
+            # figure out the best global optimum
+            bestFitness = gBestFitness[0]
+            bestPos = gBestPos[0]
 
-    # save network file with best solution
-    util.saveBestCase(net, gBestPos, paramTypes, run_name)
+            for r in range(size):
+                if gBestFitness[r] < bestFitness:
+                    bestFitness = gBestFitness[r]
+                    bestPos = gBestPos[r]
 
-    print('\ndone!')
+            bar.next()
+            tIter = time.perf_counter()
+            # log overall current best
+            log_util.logIter(log, i, bestFitness, tIter-tStart, log_destination)
+
+
+        else:
+            bestFitness = None
+            bestPos = None
+
+        # broadcast the minimum
+        bestFitness = comm.bcast(bestFitness, root=0)
+        bestPos = comm.bcast(bestPos, root=0)
+
+        gBestFitness = bestFitness
+        gBestPos = bestPos
+
+    if rank == 0:
+        bar.finish() # terminate progress bar
+        log_util.endLog(log, run_name, log_destination) # terminate data logger
+
+        # save network file with best solution
+        util.saveBestCase(net, gBestPos, paramTypes, run_name)
+
+        print('\ndone!')
 
 
 if __name__ == '__main__':
-
-    print('Initializing case ...')
+    if rank == 0:
+        print('Initializing case ...')
     case = sys.argv[1]
     iterations = int(sys.argv[2])
     nParticles = int(sys.argv[3])
