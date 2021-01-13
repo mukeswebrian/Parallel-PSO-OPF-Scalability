@@ -11,7 +11,7 @@ labels = {
 
 hide_menu_style = """
         <style>
-        html {background-color: #EDF1F9;}
+        html {background-color: white;}
         </style>
         """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
@@ -30,7 +30,7 @@ y_dim = st.sidebar.selectbox('Y dimension', sorted(list(labels.keys())))
 x_label = labels[x_dim]
 y_label = labels[y_dim]
 title = '{} vs {}'.format(y_label, x_label)
-fig, ax = plt.subplots(**{'facecolor': '#EDF1F9'})
+fig, ax = plt.subplots(**{'facecolor': 'white'})
 
 if consolidate=='plot individual runs':
 
@@ -52,8 +52,8 @@ if consolidate=='plot individual runs':
         st.markdown('Select some data to display here ...')
 
 elif consolidate == 'plot average data':
-    parallel_nParticles = st.sidebar.multiselect('select parallel plots to be included', log_util.getParallelGroups(source))
-    serial_nParticles = st.sidebar.multiselect('select serial plots to be included', log_util.getSerialGroups(source))
+    parallel_nParticles = st.sidebar.multiselect('select parallel plots to be included', sorted(log_util.getParallelGroups(source)))
+    serial_nParticles = st.sidebar.multiselect('select serial plots to be included', sorted(log_util.getSerialGroups(source)))
 
 
     for n in parallel_nParticles:
