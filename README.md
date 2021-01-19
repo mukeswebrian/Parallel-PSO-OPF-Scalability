@@ -13,8 +13,8 @@ PSO is an evolutionary heuristic search algorithm that was first described by a 
 An electrical power system refers to the set of components involved in the generation, transmission, and distribution of electricity. Supplying electricity to the loads on an electrical power system typically entails satisfying several constraints (e.g., safety and physical operation constraints) and solving optimization problems like power loss minimization. Generally, the OPF problem involves choosing the set of control parameters of the power system that optimizes a given metric e.g., financial cost of electricity generation, power loss, emissions etc. or a set of metrics (multi-objective optimization).
 
 ## Installing Dependencies 
-<code>pip install -f requirements.txt</code>
+>> <code>pip install -f requirements.txt</code>
 
 ## Visualization of Results
 As part of the project, a custom browser-based interactive viewer was implemented using [Streamlit](https://www.streamlit.io/) to facilitate analysis of experimetal data. The viewer can be started using the following command:
-<code>streamlit run run_viewer.py</code>
+>> <code>streamlit run run_viewer.py</code>
