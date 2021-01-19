@@ -95,15 +95,26 @@ elif consolidate == 'plot impact of particles':
     table = pd.DataFrame(table)
 
     table = table.query('nparticles>1')
-    table.nparticles = table.nparticles.apply(math.log)
-    table.rename(columns={'nparticles':'log nparticles',
-                          'bestFitness':'bestFitness (MW)',
-                          'runtime':'runtime (s)'}, inplace=True)
+
+    st.sidebar.markdown('> ### Additional parameters')
+    use_log = st.sidebar.radio('select scale for number of particles', ['logarithmic', 'linear'])
 
     y_dim = st.sidebar.selectbox('Y dimension', ['bestFitness (MW)','runtime (s)'])
-
     fig, ax = plt.subplots()
-    table.plot.scatter(x='log nparticles', y=y_dim, ax=ax)
+
+    if use_log == 'logarithmic':
+        table.nparticles = table.nparticles.apply(math.log)
+        table.rename(columns={'nparticles':'log nparticles',
+                              'bestFitness':'bestFitness (MW)',
+                              'runtime':'runtime (s)'}, inplace=True)
+        table.plot.scatter(x='log nparticles', y=y_dim, ax=ax)
+
+    elif use_log == 'linear':
+        table.rename(columns={'nparticles':'nparticles',
+                              'bestFitness':'bestFitness (MW)',
+                              'runtime':'runtime (s)'}, inplace=True)
+        table.plot.scatter(x='nparticles', y=y_dim, ax=ax)
+
     st.pyplot(fig)
     st.table(table)
 
