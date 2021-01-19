@@ -287,6 +287,30 @@ def getAverageData(nParticles, source, runType='serial'):
 
     return average
 
+def getDataTable(nParticles, source, runType='serial'):
+
+    # filter runs
+    if runType == 'serial':
+        runs = [ c for c in getSerialRuns(source) if getNumParticles(c)==nParticles ]
+    elif runType == 'parallel':
+        runs = [ c for c in getParallelRuns(source) if getNumParticles(c)==nParticles ]
+    else:
+        print('Type must be either "parallel" or "serial"')
+
+    # laod datasets
+
+    data = [getRunData(run_name, source) for run_name in runs]
+
+    # consolidate data table
+    table = pd.DataFrame()
+    for df, run_name in zip(data, runs):
+        temp = df.join(pd.Series([run_name for i in df.index], index=df.index, name="run")) # add run lable column
+        table = pd.concat([table, temp])
+
+    return table
+
+
+
 def getParallelGroups(source):
     groups = set()
     for run in getParallelRuns(source):
