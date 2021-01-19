@@ -20,4 +20,4 @@ As part of the project, a custom browser-based interactive viewer was implemente
 >> <code>streamlit run run_viewer.py</code>
 
 Here is a snapshot of the viewer
-![viewer](archives/image.png)
+> ![viewer](archives/image.png)
