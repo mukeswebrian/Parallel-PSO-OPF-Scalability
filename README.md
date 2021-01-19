@@ -18,3 +18,6 @@ An electrical power system refers to the set of components involved in the gener
 ## Visualization of Results
 As part of the project, a custom browser-based interactive viewer was implemented using [Streamlit](https://www.streamlit.io/) to facilitate analysis of experimetal data. The viewer can be started using the following command:
 >> <code>streamlit run run_viewer.py</code>
+
+Here is a snapshot of the viewer
+[viewer](archives/image.png)
