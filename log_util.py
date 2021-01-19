@@ -264,28 +264,38 @@ def getNumParticles(run_name):
 
     return nums[0]
 
+def getNumProcesses(run_name):
+    tkn = run_name.split('processes')[1].split('_')[0]
+    print(tkn)
+    return int(tkn)
 
-def getAverageData(nParticles, source, runType='serial'):
+def getAverageData(nParticles, source, runType='serial', nProcesses=0):
 
     # filter runs
     if runType == 'serial':
         runs = [ c for c in getSerialRuns(source) if getNumParticles(c)==nParticles ]
-    elif runType == 'parallel':
+    elif runType == 'parallel' and nProcesses>0:
+        runs = [ c for c in getParallelRuns(source) if (getNumParticles(c)==nParticles and getNumProcesses(c)==nProcesses)]
+    elif runType == 'parallel' and nProcesses==0:
         runs = [ c for c in getParallelRuns(source) if getNumParticles(c)==nParticles ]
     else:
-        print('Type must be either "parallel" or "serial"')
+        print('Type must be either "parallel" or "serial" and nProcesses cannot be negative')
 
-    # laod datasets
+
+    # load datasets
     data = [getRunData(run_name, source) for run_name in runs]
 
-    # calculate average
-    total = 0
-    for df in data:
-        total = total + df
+    if data == []:
+        return pd.DataFrame()
+    else:
+        # calculate average
+        total = 0
+        for df in data:
+            total = total + df
 
-    average = total/len(data)
+        average = total/len(data)
 
-    return average
+        return average
 
 def getDataTable(nParticles, source, runType='serial'):
 
@@ -324,6 +334,15 @@ def getSerialGroups(source):
     groups = set()
     for run in getSerialRuns(source):
         n = getNumParticles(run)
+        if n not in groups:
+            groups.add(n)
+
+    return list(groups)
+
+def getProcessCounts(source):
+    groups = set()
+    for run in getParallelRuns(source):
+        n = getNumProcesses(run)
         if n not in groups:
             groups.add(n)
 
