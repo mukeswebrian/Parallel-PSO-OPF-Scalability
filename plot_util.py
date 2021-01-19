@@ -42,9 +42,10 @@ def plotRunQuantities(run, x_dim, x_label, y_dim, y_label, title, ax, source):
 
     return ax
 
-def plotAverageData(nParticles, runType, x_dim, x_label, y_dim, y_label, title, ax, source):
+def plotAverageData(nParticles, runType, x_dim, x_label, y_dim, y_label, title, ax, source, num_iter=25):
 
     data = log_util.getAverageData(nParticles, source, runType)
+    data = data.query('iteration <= {}'.format(num_iter))
     label = '{} particles - {}'.format(nParticles, runType)
     data.rename(columns={y_dim: label}, inplace=True)
     data.plot(kind='line', x=x_dim, y=label, ax=ax, figsize=(10,8), **plot_fmt)

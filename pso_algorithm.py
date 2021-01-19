@@ -24,7 +24,7 @@ def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, 
 
     n = 100 # number of particles
     alpha1 = 0.2 # attraction to personal best
-    alpha2 = 0.2 # attraction to globa; best
+    alpha2 = 0.2 # attraction to global; best
     omega = 0.5 # intertia
     iterations = 100 # maximum number of iterations
     case =  None # path to the MATPOWER power system to use (.mat file)

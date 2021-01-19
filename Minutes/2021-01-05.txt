@@ -1,11 +1,15 @@
 Agenda
 - Review current MPI implementation (broadcast and gather)
 - Discuss inital MPI run results
-- Discuss strategies for reducing comminication overhead e.g reducing syncronization frequency
+- Discuss strategies for reducing comminication overhead e.g reducing synchronization frequency
 
 Discussion
--
--
+- Attempt algorithm with more exploration, in order to take advantage of increased number of particles (varry initialization parameters)
+- Minimum powerloss as a function of processes and or particles
+- use a different terminating condition e.g when the particles converge
+- try runs with reduced synchronization frequency
+- direct comparison of parallel run with serial with the same parameters (for completeness)
+- visualization of the discovered solutions
 
 Next meeting
--
+- Tuesday January 19th, 2021
