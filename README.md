@@ -24,4 +24,4 @@ Here is a snapshot of the viewer
 
 
 ## Project Work Plan
-> ![viewer](archives/image.png)
+> ![viewer](archives/work_plan.png)
