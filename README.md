@@ -2,9 +2,8 @@
 
 >Note: All code snipets assume that the project's parent directory is the current active directory.
 
-## Background
-MSc Dissertation project to study the scalability of the parallel Particle Swarm Optimization algorithm for solving the Optimal Power Flow problem.
-In this project, we implement a parallelized version of the PSO algorithm that is applied to a power loss minimization problem using the IEEE 14-bus benchmark system. The MPI implementation was executed on the Cirrus HPC system. 
+## Work Undertaken
+In this MSc Dissertation project, we implemented a parallelized version of the PSO algorithm that was applied to a power loss minimization problem and executed on the Cirrus Supercomputing System. We also explored how our implementation of the parallel PSO algorithm exploits the additional computational resources availed by the Cirrus system to minimize the computation time required to achieve an acceptable solution for the problem of minimizing power loss in the IEEE 14 Bus benchmark power system. 
 
 ### Particle Swarm Optimization (PSO)
 PSO is an evolutionary heuristic search algorithm that was first described by a social psychologist and an electrical engineer in 1995 to model the behavior of bird flock (Kennedy and Eberhart, 1995). The algorithm involves directly searching the problem hyperspace over several iterations using a population of candidate solutions that are referred to as “particles” to find an optimal solution.
