@@ -21,3 +21,7 @@ As part of the project, a custom browser-based interactive viewer was implemente
 
 Here is a snapshot of the viewer
 > ![viewer](archives/image.png)
+
+
+## Project Work Plan
+> ![viewer](archives/image.png)
