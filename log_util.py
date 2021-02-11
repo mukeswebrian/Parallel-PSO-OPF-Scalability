@@ -285,6 +285,7 @@ def getAverageData(nParticles, source, runType='serial', nProcesses=0):
     # load datasets
     data = [getRunData(run_name, source) for run_name in runs]
 
+
     if data == []:
         return pd.DataFrame()
     else:
@@ -295,6 +296,9 @@ def getAverageData(nParticles, source, runType='serial', nProcesses=0):
 
         average = total/len(data)
 
+        # use minimum for time elapsed
+        print(data)
+        average.update(min(data, key=lambda d: d.timeElapsed.loc[49]).timeElapsed)
         return average
 
 def getDataTable(nParticles, source, runType='serial'):

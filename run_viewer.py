@@ -16,7 +16,7 @@ hide_menu_style = """
         html {background-color: white;}
         </style>
         """
-st.set_page_config(layout='wide')
+#st.set_page_config(layout='wide')
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 
@@ -74,6 +74,7 @@ elif consolidate == 'plot average data':
     data = pd.DataFrame()
 
     for n in parallel_nParticles:
+
         ax = plot_util.plotAverageData(n, 'parallel', x_dim, x_label, y_dim, y_label, title, ax, source, num_iter)
 
     #for n in serial_nParticles:
@@ -84,7 +85,7 @@ elif consolidate == 'plot average data':
 elif consolidate == 'plot impact of particles':
     table = []
 
-    num_procs = st.sidebar.selectbox('select number of processes', sorted(log_util.getProcessCounts(source)))
+    num_procs = st.sidebar.selectbox('select number of processes', [0]+sorted(log_util.getProcessCounts(source)))
 
     for n in sorted(log_util.getParallelGroups(source)):
 
@@ -109,12 +110,14 @@ elif consolidate == 'plot impact of particles':
                               'runtime':'runtime (s)'}, inplace=True)
         table.plot.scatter(x='log nparticles', y=y_dim, ax=ax)
 
+
     elif use_log == 'linear':
         table.rename(columns={'nparticles':'nparticles',
                               'bestFitness':'bestFitness (MW)',
                               'runtime':'runtime (s)'}, inplace=True)
         table.plot.scatter(x='nparticles', y=y_dim, ax=ax)
 
+    plt.grid()
     st.pyplot(fig)
     st.table(table)
 
