@@ -3,6 +3,11 @@ Agenda
 - Review of run results
 
 Discussion
+- Find and compare with a different bechmarking study using the IEEE 20-bus system for power loss minimization
+- Use minimum rather than average for runtime
+- Reasses timeline and results so far against objectives to determine next step
+  - consider other tweaks to the algorithm might affect parallel performance
+  - is there room to increase scope, generalize?
 
 Next Meeting
 Feb 2, 2021

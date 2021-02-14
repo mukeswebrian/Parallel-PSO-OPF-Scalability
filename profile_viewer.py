@@ -59,8 +59,9 @@ elif plot =='line':
 
 elif plot =='bar':
     data = table.T.reset_index()
-    fig = plot_util.plotBar(data)
-    fig.update_layout(title='Runtime Breakdown',
-                      xaxis_title='Run',
-                      yaxis_title='Duration (seconds)')
-    st.plotly_chart(fig)
+    fig = plot_util.plotBar2(data)
+    #fig.update_layout(title='Runtime Breakdown',
+    #                  xaxis_title='Run',
+    #                  yaxis_title='Duration (seconds)')
+    #st.plotly_chart(fig)
+    st.pyplot(fig)
