@@ -55,6 +55,8 @@ def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, 
     # load case data
     if case == '':
         net = networks.case14() # use built in IEEE 14 bus case by default
+    elif case == 'case30':
+        net = networks.case_ieee30()
     else:
         net = util.loadPowerSys(case)
 
