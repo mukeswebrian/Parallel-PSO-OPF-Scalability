@@ -104,6 +104,7 @@ elif consolidate == 'plot impact of particles':
 
     if use_log == 'logarithmic':
         table.nparticles = table.nparticles.apply(math.log)
+        #table.bestFitness = table.bestFitness.apply(math.log)
         table.rename(columns={'nparticles':'log nparticles',
                               'bestFitness':'bestFitness (MW)',
                               'runtime':'runtime (s)'}, inplace=True)
