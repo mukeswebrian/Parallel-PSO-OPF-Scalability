@@ -4,7 +4,7 @@
 
 # Slurm job options (name, compute nodes, job time)
 #SBATCH --job-name=pso_opf
-#SBATCH --time=0:40:0
+#SBATCH --time=0:50:0
 #SBATCH --exclusive
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=24
@@ -66,4 +66,13 @@ cd $SLURM_SUBMIT_DIR
 # srun python parallel_mpi_pso_algorithm.py "" 50 8 0.25 0.2 0.7 parallel_particles192_processes24_run5 24
 
 srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles24_processes24_run1_case30 24
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles24_processes24_run2_case30 24
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles24_processes24_run3_case30 24
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles24_processes24_run4_case30 24
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles24_processes24_run5_case30 24
+
 srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles72_processes24_run1_case30 24
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles72_processes24_run2_case30 24
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles72_processes24_run3_case30 24
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles72_processes24_run4_case30 24
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles72_processes24_run5_case30 24

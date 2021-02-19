@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import plot_util
 import pandas as pd
 import plotly.graph_objects as go
+import math
 
 labels = {
             'iteration': 'Number of Iterations',
@@ -48,13 +49,13 @@ elif plot =='line':
 
     for component in to_plot:
         x = [log_util.getNumParticles(p) for p in table.columns]
-        y = list(table.loc[component])
+        y =  [math.log(n) for n in list(table.loc[component])]
         name = component
         fig = plot_util.plotLine(x, y, name, fig)
 
     fig.update_layout(title='Duration vs Number of Particles',
                       xaxis_title='Number of Particles',
-                      yaxis_title='Duration (seconds)')
+                      yaxis_title='Log of Duration (seconds)')
     st.plotly_chart(fig)
 
 elif plot =='bar':

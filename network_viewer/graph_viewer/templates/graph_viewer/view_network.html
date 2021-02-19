@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  </head>
+  <body>
+
+    <form method='post' id="networkform">
+      {% csrf_token %}
+      <label for="networks">Choose a network solution to display:</label>
+      <input type="submit" value="Submit">
+    </form>
+
+    <select name='network' form="networkform" >
+      {% for option in options %}
+        {% if selected == option.value %}
+          <option value={{ option.value }} selected>{{ option.name }}</option>
+        {% else %}
+          <option value={{ option.value }}>{{ option.name }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+    <h1>{{ title }}</h1>
+    <div id="net" style="border:1px solid #f1f1f1;max-width:100%;height:600px">
+      <div class="vis-network" tabindex="900" style="position: relative; overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%;">
+        <canvas width="776" height="1500" style="position: relative; touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%;"></canvas>
+      </div>
+    </div>
+
+    <script>
+
+      var DOTstring =  `{{ dot_string }}`;
+
+      DOTstring =  DOTstring.replace(/&quot;/g, '"');
+
+      var parsedData = vis.parseDOTNetwork(DOTstring);
+      var data = {
+        nodes: parsedData.nodes,
+        edges: parsedData.edges
+      }
+      var container = document.getElementById('net');
+      var network = new vis.Network(container, data);
+      network.setOptions({interaction: {zoomView: true}});
+    </script>
+  </body>
+</html>

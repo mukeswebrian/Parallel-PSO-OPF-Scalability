@@ -1,7 +1,18 @@
+'''
+Author: Brian Mukeswe
+Date: February 18, 2021
+Email: b.mukeswe@sms.ed.ac.uk
+
+
+Purpose: This script contains utility functions for plotting experimental
+         data
+'''
+
 import log_util
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.express as px
+import math
 
 
 
@@ -86,7 +97,13 @@ def plotAverageData(nParticles, runType, x_dim, x_label, y_dim, y_label, title, 
     plt.yticks(**tick_fmt)
     plt.xticks(**tick_fmt)
     plt.xlim(0, max(data[x_dim])+5)
-    plt.text(x=data[x_dim].iloc[-1], y=data[label].iloc[-1], s=label, **text_fmt)
+
+    if nParticles == 144:
+        plt.text(x=data[x_dim].iloc[-1], y=data[label].iloc[-1]+0.04, s=label,  **text_fmt)
+    elif nParticles == 288:
+        plt.text(x=data[x_dim].iloc[-1], y=data[label].iloc[-1]-0.04, s=label,  **text_fmt)
+    else:
+        plt.text(x=data[x_dim].iloc[-1], y=data[label].iloc[-1], s=label, **text_fmt)
     plt.legend(**legend_fmt) # plt.legend([], frameon=False)#
     plt.grid()
 

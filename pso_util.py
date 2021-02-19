@@ -57,9 +57,8 @@ def initVelocities(paramTypes, n):
 
 def calcFitness(net, param_data):
 
-    # TBD: Fitness Evaluation (Loss and cost calculation)
     '''
-    (A * line loss + B * thermal violation + C * voltage violation)
+    Fitness Evaluation: calculate total real power losses
     '''
 
     # write particle data to network
@@ -74,6 +73,9 @@ def calcFitness(net, param_data):
     return loss
 
 def saveBestCase(net, gBestPos, paramTypes, run_name):
+    '''
+    Save the case data for the global best solution
+    '''
     gBestPos.name = 'params'
     param_data = pd.concat([gBestPos, paramTypes.paramType, paramTypes['index']], axis=1)
 
@@ -85,21 +87,22 @@ def saveBestCase(net, gBestPos, paramTypes, run_name):
 
 
 def updateVelocities(velocities, positions, pBestPos, gBestPos, omega, alpha1, alpha2):
+    '''
+    Execute PSO velocity update step
+    '''
     term1 = (omega * velocities)
     term2 = (alpha1 * rd.random() * (pBestPos-positions))
     term3 = (alpha2 * rd.random() * (gBestPos-positions.T).T)
-
-    #print(pBestPos)
-    #print(positions)
-    #print(term2)
 
     velocities = term1 + term2 + term3
     return velocities
 
 def updatePositions(positions, velocities, paramTypes):
-    # Update the particle positions while handilng special cases
-    # 1. handling discrete dimentions
-    # 2. handling min and max limits
+    '''
+    Update the particle positions while handilng special cases i.e.
+      1. handling discrete dimentions
+      2. handling min and max limits
+    '''
 
     def checkLimits(x, minVal, maxVal):
         if minVal<=x and x<=maxVal:

@@ -4,7 +4,7 @@
 
 # Slurm job options (name, compute nodes, job time)
 #SBATCH --job-name=pso_opf
-#SBATCH --time=0:40:0
+#SBATCH --time=0:50:0
 #SBATCH --exclusive
 #SBATCH --nodes=1
 #SBATCH --tasks-per-node=12
@@ -59,8 +59,20 @@ cd $SLURM_SUBMIT_DIR
 # srun python parallel_mpi_pso_algorithm.py "" 50 4 0.25 0.2 0.7 parallel_particles48_processes12_run5 12
 # srun python parallel_mpi_pso_algorithm.py "" 50 5 0.25 0.2 0.7 parallel_particles60_processes12_run5 12
 
-srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run1 12
-srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run2 12
-srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run3 12
-srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run4 12
-srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run5 12
+# srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run1 12
+# srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run2 12
+# srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run3 12
+# srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run4 12
+# srun python parallel_mpi_pso_algorithm.py "" 50 16 0.25 0.2 0.7 parallel_particles192_processes12_run5 12
+
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles12_processes12_run1_case30 12
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles12_processes12_run2_case30 12
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles12_processes12_run3_case30 12
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles12_processes12_run4_case30 12
+srun python parallel_mpi_pso_algorithm.py "case30" 50 1 0.25 0.2 0.7 parallel_particles12_processes12_run5_case30 12
+
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles36_processes12_run1_case30 12
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles36_processes12_run2_case30 12
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles36_processes12_run3_case30 12
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles36_processes12_run4_case30 12
+srun python parallel_mpi_pso_algorithm.py "case30" 50 3 0.25 0.2 0.7 parallel_particles36_processes12_run5_case30 12

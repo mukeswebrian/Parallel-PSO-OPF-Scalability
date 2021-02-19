@@ -1,3 +1,12 @@
+'''
+Author: Brian Mukeswe
+Date: February 18, 2021
+Email: b.mukeswe@sms.ed.ac.uk
+
+
+Purpose: This script runs an interactive web based graphical interface for
+         visualising experimental results.
+'''
 import streamlit as st
 from pymongo import MongoClient
 import log_util
@@ -61,6 +70,7 @@ elif consolidate == 'plot average data':
     y_dim = st.sidebar.selectbox('Y dimension', sorted(list(labels.keys())))
 
     st.sidebar.markdown('> Additional parameters')
+    
     num_iter = st.sidebar.slider('Number of iterations',1,50,25,1)
 
     x_label = labels[x_dim]
