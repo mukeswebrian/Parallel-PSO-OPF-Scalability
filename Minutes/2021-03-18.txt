@@ -5,6 +5,8 @@ Review draft dissertation feed back
 Disicussion
 - Explore the impact of exploitation vs exploration on parallel performance
 - Talk more about r values, is it the same for all particles?
+- How can you further tune up the algorithm by manipulating other hyperparameters
+- The position update takes longer than velocity update because of the extra steps in handling dicrete dimensions and max-min limits.
 
 Suggestions:
 - A few more examples of past and related work, even if it’s not in a separate “literature review” section.
