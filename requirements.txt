@@ -5,3 +5,5 @@ pymongo
 matplotlib
 numba
 streamlit
+lxml
+django

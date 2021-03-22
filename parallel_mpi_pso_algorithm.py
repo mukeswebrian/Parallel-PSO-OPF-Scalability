@@ -30,14 +30,14 @@ size = comm.Get_size()
 rank = comm.Get_rank()
 
 
-def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.65, run_name='example'):
+def runPSO(case='', iterations=100, n=100, alpha1=0.25, alpha2=0.2, omega=0.7, run_name='example'):
     '''
     parameter default values
 
     n = 100 # number of particles per process
     alpha1 = 0.25 # slightly more attraction to personal best to encourage exploration
     alpha2 = 0.2 # attraction to globa; best
-    omega = 0.5 # intertia
+    omega = 0.7 # intertia
     iterations = 100 # maximum number of iterations
     case =  None # path to the MATPOWER power system to use (.mat file)
     '''

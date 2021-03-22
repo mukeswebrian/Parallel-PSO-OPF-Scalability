@@ -56,18 +56,22 @@ def format_label(s):
             i += 1
 
         if token[i:]=='1':
-            label += token[i:] + '-' + token[:i-2] + ' '
+            label += token[i:] + '-' + token[:i-1] + ' '
         else:
             label += token[i:] + '-' + token[:i] + ' '
 
-    return label.strip()
+    return label.strip().replace('1-process', 'serial')[:-1]
 
 def plotRunQuantities(run, x_dim, x_label, y_dim, y_label, title, ax, source):
 
     data = log_util.getRunData(run, source)
+    print(data.iloc[-1])
+
     label = format_label(run)
     data.rename(columns={y_dim: label}, inplace=True)
     data.plot(kind='line', x=x_dim, y=label, ax=ax, figsize=(10,8), **plot_fmt)
+
+
 
     plt.xlabel(x_label, fontdict=ax_title_fmt)
     plt.ylabel(y_label, fontdict=ax_title_fmt)
@@ -83,7 +87,9 @@ def plotAverageData(nParticles, runType, x_dim, x_label, y_dim, y_label, title, 
 
     data = log_util.getAverageData(nParticles, source, runType)
     data = data.query('iteration <= {}'.format(num_iter))
-    if nParticles <=5:
+    if nParticles ==1:
+        label = '{} particle - serial'.format(nParticles, runType)
+    elif nParticles <=5:
         label = '{} particles - serial'.format(nParticles, runType)
     else:
         label = '{} particles'.format(nParticles, runType)
@@ -97,13 +103,14 @@ def plotAverageData(nParticles, runType, x_dim, x_label, y_dim, y_label, title, 
     plt.yticks(**tick_fmt)
     plt.xticks(**tick_fmt)
     plt.xlim(0, max(data[x_dim])+5)
-
+    '''
     if nParticles == 144:
         plt.text(x=data[x_dim].iloc[-1], y=data[label].iloc[-1]+0.04, s=label,  **text_fmt)
     elif nParticles == 288:
         plt.text(x=data[x_dim].iloc[-1], y=data[label].iloc[-1]-0.04, s=label,  **text_fmt)
     else:
         plt.text(x=data[x_dim].iloc[-1], y=data[label].iloc[-1], s=label, **text_fmt)
+    '''
     plt.legend(**legend_fmt) # plt.legend([], frameon=False)#
     plt.grid()
 

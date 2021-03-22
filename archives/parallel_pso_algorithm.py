@@ -51,9 +51,9 @@ if __name__ == '__main__':
     suggested parameter default values
 
     n = 100 # number of particles
-    alpha1 = 0.2 # attraction to personal best
+    alpha1 = 0.25 # attraction to personal best
     alpha2 = 0.2 # attraction to globa; best
-    omega = 0.5 # intertia
+    omega = 0.7 # intertia
     iterations = 100 # maximum number of iterations
     case =  None # path to the MATPOWER power system to use (.mat file)
     '''

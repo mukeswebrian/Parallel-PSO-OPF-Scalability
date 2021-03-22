@@ -8,7 +8,7 @@ def loss_to_width(loss):
 def load_transformer_edges(dot_string, transformers, res_trafo):
     for i in transformers.index:
         thickness = loss_to_width(res_trafo.pl_mw.loc[i])
-        loss = '{:.3f} mw'.format(res_trafo.pl_mw.loc[i])
+        loss = '{:.3f} MW'.format(res_trafo.pl_mw.loc[i])
 
         n1 = transformers.hv_bus.loc[i]
         n2 = transformers.lv_bus.loc[i]
@@ -21,7 +21,7 @@ def load_line_edges(dot_string, lines, res_lines):
 
     for i in lines.index:
         thickness = loss_to_width(res_lines.pl_mw.loc[i])
-        loss = '{:.3f} mw'.format(res_lines.pl_mw.loc[i])
+        loss = '{:.3f} MW'.format(res_lines.pl_mw.loc[i])
 
         n1 = lines.from_bus.loc[i]
         n2 = lines.to_bus.loc[i]
