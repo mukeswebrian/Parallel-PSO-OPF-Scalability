@@ -1,0 +1,17 @@
+Agenda
+Review draft dissertation feed back
+
+
+Disicussion
+- Explore the impact of exploitation vs exploration on parallel performance
+- Talk more about r values, is it the same for all particles?
+- How can you further tune up the algorithm by manipulating other hyperparameters
+- The position update takes longer than velocity update because of the extra steps in handling dicrete dimensions and max-min limits.
+
+Suggestions:
+- A few more examples of past and related work, even if it’s not in a separate “literature review” section.
+- A few more details of your parallel implementation. The algorithm is clear,
+but maybe you could say something more about the choice of MPI functions you used to implement (e.g. Broadcast vs MPI Send/Recv).
+- Some results with some other parameters for the algorithm to explore the space of hyperparameters a bit more
+- A little more precision in how you discuss results (when are things general? When are things specific?
+  When does a result “prove” something, when does it “suggest” something, when does it “support” something. All of these are valid to include, but it’s good to make clear the strength of your assertions.
