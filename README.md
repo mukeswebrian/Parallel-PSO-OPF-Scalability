@@ -11,6 +11,11 @@ PSO is an evolutionary heuristic search algorithm that was first described by a 
 #### Optimal Power Flow (OPF)
 An electrical power system refers to the set of components involved in the generation, transmission, and distribution of electricity. Supplying electricity to the loads on an electrical power system typically entails satisfying several constraints (e.g., safety and physical operation constraints) and solving optimization problems like power loss minimization. Generally, the OPF problem involves choosing the set of control parameters of the power system that optimizes a given metric e.g., financial cost of electricity generation, power loss, emissions etc. or a set of metrics (multi-objective optimization).
 
+#### Parallel Computing
+Parallel computing refers to the use of multiple computing units to concurrently execute a program in contrast to executing the program on a single computer. Therefore, it follows that “parallelization” of an algorithm entails adapting the algorithm so that it can be executed concurrently using multiple computing units instead of a single computer. One of the major reasons for parallelization is to speed up the execution of computer programs by utilizing additional computing resources. Modern HPC systems, such the Cirrus system that was used for this project, allow programs to be executed on hundreds of computing units.
+Although parallelization of a computer program introduces additional complexity, the gains achieved from parallelizing some programs far outweigh the cost of handling the additional complexity; such programs are said to have high scalability. As a result, in addition to parallelization, we assessed the parallel scalability of the PSO algorithm in this project. 
+
+
 ## Installing Dependencies 
 >> <code>pip install -f requirements.txt</code>
 
