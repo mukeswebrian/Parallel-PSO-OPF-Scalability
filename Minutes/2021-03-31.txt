@@ -1,0 +1,10 @@
+Agenda
+- Discuss updated Report
+- Review Talk Slide deck
+- Discuss Talk scheduling Logistics
+
+Discussion
+- impact of other hyperparameters - adiing some reference to literature discussiong PSO hyperparameter selection.
+
+Suggestions
+- If time allows, possibly include more discussion of related work, drawing more connections between the examples and this project.
