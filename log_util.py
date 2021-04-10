@@ -123,7 +123,7 @@ def endLog(log, run_name, log_destination):
 
 def getAvailableRuns(source):
     if source == 'database':
-        # itdentify database
+        # identify database
         server["database"] = "pso_opf_runs"
         client = MongoClient(host=server["host"], port=server["port"])
         db = client[server["database"]]
@@ -143,7 +143,7 @@ def getAvailableRuns(source):
 
 def getAvailableProfiles(source):
     if source == 'database':
-        # itdentify database
+        # identify database
         server["database"] = "pso_opf_profiles"
         client = MongoClient(host=server["host"], port=server["port"])
         db = client[server["database"]]
