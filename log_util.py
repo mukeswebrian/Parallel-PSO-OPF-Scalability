@@ -297,7 +297,8 @@ def getAverageData(nParticles, source, runType='serial', nProcesses=0):
         average = total/len(data)
 
         # use minimum for time elapsed
-        print(data)
+        print('runs included:\n')
+        print(runs)
         average.update(min(data, key=lambda d: d.timeElapsed.loc[49]).timeElapsed)
         return average
 

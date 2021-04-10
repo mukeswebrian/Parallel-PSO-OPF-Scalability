@@ -65,7 +65,7 @@ def format_label(s):
 def plotRunQuantities(run, x_dim, x_label, y_dim, y_label, title, ax, source):
 
     data = log_util.getRunData(run, source)
-    print(data.iloc[-1])
+    print(data)
 
     label = format_label(run)
     data.rename(columns={y_dim: label}, inplace=True)

@@ -87,5 +87,45 @@ cd $SLURM_SUBMIT_DIR
 # srun python parallel_mpi_pso_algorithm.py "case30" 50 5 0.25 0.2 0.7 parallel_particles5_processes1_run1_case30 1
 # srun python parallel_mpi_pso_algorithm.py "case30" 50 5 0.25 0.2 0.7 parallel_particles5_processes1_run2_case30 1
 
-srun python parallel_mpi_pso_algorithm.py "case30" 50 48 0.25 0.2 0.7 parallel_particles48_processes1_run1_case30 1
-srun python parallel_mpi_pso_algorithm.py "case30" 50 96 0.25 0.2 0.7 parallel_particles96_processes1_run1_case30 1
+# srun python parallel_mpi_pso_algorithm.py "case30" 50 48 0.25 0.2 0.7 parallel_particles48_processes1_run1_case30 1
+# srun python parallel_mpi_pso_algorithm.py "case30" 50 96 0.25 0.2 0.7 parallel_particles96_processes1_run1_case30 1
+
+# setting alpha1 to be greater than alpha2, with constant inertia
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.3 0.2 0.5 parallel_particles36_processes1_run1_a1_gt_a2 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.3 0.2 0.5 parallel_particles36_processes1_run2_a1_gt_a2 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.3 0.2 0.5 parallel_particles36_processes1_run3_a1_gt_a2 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.3 0.2 0.5 parallel_particles36_processes1_run4_a1_gt_a2 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.3 0.2 0.5 parallel_particles36_processes1_run4_a1_gt_a2 1
+
+# setting alpha1 to be less than alpha2, with constant inertia
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.3 0.5 parallel_particles36_processes1_run1_a1_lt_a2 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.3 0.5 parallel_particles36_processes1_run2_a1_lt_a2 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.3 0.5 parallel_particles36_processes1_run3_a1_lt_a2 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.3 0.5 parallel_particles36_processes1_run4_a1_lt_a2 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.3 0.5 parallel_particles36_processes1_run5_a1_lt_a2 1
+
+
+# high inertia, constant and equal alpha1, alpha2
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.8 parallel_particles36_processes1_run1_high_inertia 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.8 parallel_particles36_processes1_run2_high_inertia 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.8 parallel_particles36_processes1_run3_high_inertia 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.8 parallel_particles36_processes1_run4_high_inertia 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.8 parallel_particles36_processes1_run5_high_inertia 1
+
+# low inertia, constant and equal alpha1, alpha2
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.3 parallel_particles36_processes1_run1_low_inertia 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.3 parallel_particles36_processes1_run2_low_inertia 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.3 parallel_particles36_processes1_run3_low_inertia 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.3 parallel_particles36_processes1_run4_low_inertia 1
+# srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.3 parallel_particles36_processes1_run5_low_inertia 1
+
+# mid inertia, constant and equal alpha1, alpha2
+srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.5 parallel_particles36_processes1_run1_mid_inertia 1
+srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.5 parallel_particles36_processes1_run2_mid_inertia 1
+srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.5 parallel_particles36_processes1_run3_mid_inertia 1
+srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.5 parallel_particles36_processes1_run4_mid_inertia 1
+srun python parallel_mpi_pso_algorithm.py "" 50 36 0.2 0.2 0.5 parallel_particles36_processes1_run5_mid_inertia 1
+
+
+
+
