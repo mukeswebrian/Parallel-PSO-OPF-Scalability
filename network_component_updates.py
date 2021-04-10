@@ -62,7 +62,7 @@ def update3WTrafoTapPosition(net, tapPos, lv_bus=None, mv_bus=None, hv_bus=None,
         # identify position of specified transformer in transforemer table
         txIndex = net.trafo[buses].index[0]
 
-    # apply ne tap position
+    # apply new tap position
     data = pd.Series([tapPos], name='tap_pos', index=[txIndex])
     net.trafo.update(data)
 
