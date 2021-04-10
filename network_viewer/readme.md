@@ -2,7 +2,7 @@
 
 The following steps summarize how to visualize the power system networks used in this project.
 
-Step 1: 1Ensure that all dependencies have been installed by running the command below from the project's parent directory:
+Step 1: Ensure that all dependencies have been installed by running the command below from the project's parent directory:
 ><code> pip install -f requirements.txt </code>
 
 Step 2: From the project's parent directory, navigate into the network viewer directory using the command shown below:
