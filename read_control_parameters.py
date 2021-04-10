@@ -1,3 +1,11 @@
+'''
+Author: Brian Mukeswe
+Date: Novemebr 9, 2020
+Email: b.mukeswe@sms.ed.ac.uk
+Purpose: This code includes custom utility functions for reading the control parameters
+         of a power system network model. These functions are used as part of the 
+         Particle Swarm Optimization algorithm implemetation.
+'''
 import pandas as pd
 
 def appendColumn(df, name, value):
