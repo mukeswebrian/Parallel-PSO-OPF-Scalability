@@ -5,7 +5,8 @@ Email: b.mukeswe@sms.ed.ac.uk
 
 
 Purpose: This script runs an interactive web based graphical interface for
-         visualising experimental results.
+         visualising experimental results. The results can read from either a directory on the 
+         local machine's file system or from a MongoDB database server.
 '''
 import streamlit as st
 from pymongo import MongoClient
