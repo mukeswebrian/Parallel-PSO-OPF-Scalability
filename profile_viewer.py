@@ -1,3 +1,9 @@
+'''
+Author: Brian Mukeswe
+Date: Novemebr 9, 2020
+Email: b.mukeswe@sms.ed.ac.uk
+Purpose: This code runs a custom GUI interface for visualizing experimental run results
+'''
 import streamlit as st
 from pymongo import MongoClient
 import log_util
