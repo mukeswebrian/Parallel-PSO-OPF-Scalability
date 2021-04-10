@@ -1,3 +1,10 @@
+'''
+Author: Brian Mukeswe
+Date: Novemebr 9, 2020
+Email: b.mukeswe@sms.ed.ac.uk
+Purpose: This code contains custom utility functions used as part of implementing
+         the Particle Swarm Optimization algorithm for Power Loss minimization
+'''
 import random
 import pandas as pd
 import pandapower as pp
