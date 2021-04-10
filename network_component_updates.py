@@ -1,3 +1,11 @@
+'''
+Author: Brian Mukeswe
+Date: Novemebr 9, 2020
+Email: b.mukeswe@sms.ed.ac.uk
+Purpose: This code is used to update the power system network model with 
+         new control parameter values during execution of the PSO-OPF algorithm
+'''
+
 import pandas as pd
 
 # Generator outputs
@@ -107,16 +115,3 @@ def updateControlParams(net, param_data):
             return False
 
     return all(map(updateParam, param_data.index))
-
-
-
-
-
-
-
-
-
-
-
-# Setting & Enforcing voltage constraints - use cost function
-# Setting & Enforcing Thermal constraints - use cost function
