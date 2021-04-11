@@ -4,6 +4,6 @@ Agenda
 - Style: Technical vs layman
 
 Discussion
-
+- feedbac inclusded in document comments
 
 Next meeting
